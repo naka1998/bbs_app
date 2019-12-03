@@ -1,0 +1,6 @@
+<h2>ジャンル編集</h2>
+<%= render partial: "layouts/error", locals: { product: @genre } %>
+<%= form_with model: @genre, local: true do |f| %>
+  <%= f.text_field :name %>
+  <%= f.submit "確定" %>
+<% end %>

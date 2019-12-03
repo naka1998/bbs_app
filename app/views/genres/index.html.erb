@@ -1,0 +1,10 @@
+<h4>ジャンル一覧</h4>
+<p><%= link_to "ジャンル作成", new_genre_path, class:"btn btn-outline-success" %></p>
+<ul class="list-group-flush">
+  <% @genres.each do |genre| %>
+    <li class="list-group-item"><%= genre.name %>
+    <%= link_to "編集", edit_genre_path(genre) %>
+    <%= link_to "削除", genre_path(genre), method: :delete,data:{confirm: "本当に削除しますか？"} %>
+    </li>
+  <% end %>
+</ul>
