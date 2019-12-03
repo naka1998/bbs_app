@@ -1,0 +1,14 @@
+<h2>スレッド一覧</h2>
+<%= link_to "新規作成", new_topic_path,class:"btn btn-success" %>
+<ul class="list-group">
+  <% @topics.each do |topic| %>
+  <li class="list-group-item">
+    <%= link_to topic.name, topic_path(topic) %>
+    (<%= topic.genre ? topic.genre.name : "削除されたジャンル" %>)
+    <% if topic.user_id == current_user.id || current_user.is_admin %>
+      <%= link_to "編集", edit_topic_path(topic) %>
+      <%= link_to "削除", topic_path(topic), method: :delete %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>

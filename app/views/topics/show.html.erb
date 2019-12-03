@@ -1,0 +1,44 @@
+<h2>スレッド名: <%= @topic.name %></h2>
+<%= render partial: "layouts/error", locals: {  product: @post } %>
+<div class="form-group">
+<%= form_with(model: @post, url: topic_posts_path(@topic), local: true) do |f| %>
+  <section>
+    <%= f.label :reply_post_id, "返信先" %>
+    <%= f.text_field :reply_post_id, readonly: true %>
+  </section>
+  <section>
+    <%= f.label :body, "本文" %>
+    <%= f.text_area :body,class:"form-control" %>
+  </section>
+  <%= f.submit value:"投稿" %>
+<% end %>
+</div>
+
+<ul class="list-group-flush">
+  <% @posts.each do |post|%>
+    <li class="list-group-item">
+      <p>
+        <%= post.created_at.to_s(:db) %>
+        : <%= link_to "返信", topic_path(@topic,reply_post_id: post.id)%>
+        <% if post.user_id == current_user.id || current_user.is_admin %>
+          <%= link_to "削除", post_path(post), method: :delete, data: {confirm: "本当に削除しますか？"},class:"btn btn-sm btn-danger" %>
+        <% end %>
+      </p>
+      <p><%= post.body %></p>
+    </li>
+    <% replys = Post.where(reply_post_id: post.id) %>
+    <% replys.each do |reply| %>
+      <ul class="list-group-flush">
+        <li class="list-group-item list-group-item-secondary">
+          <p>
+            <%= reply.created_at.to_s(:db) %>
+            <% if reply.user_id == current_user.id || current_user.is_admin %>
+              <%= link_to "削除", post_path(reply), method: :delete, data: {confirm: "本当に削除しますか？"},class:"btn btn-sm btn-danger" %>
+            <% end %>
+          </p>
+          <p><%= reply.body %></p>
+        </li>
+      </ul>
+    <% end %>
+  <% end %>
+</ul>
