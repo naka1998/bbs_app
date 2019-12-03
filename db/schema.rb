@@ -30,12 +30,11 @@ ActiveRecord::Schema.define(version: 2019_12_02_063830) do
   end
 
   create_table "topics", force: :cascade do |t|
-    t.integer "genre_id"
+    t.integer "genre"
     t.integer "user_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["genre_id"], name: "index_topics_on_genre_id"
     t.index ["user_id"], name: "index_topics_on_user_id"
   end
 
